@@ -1,59 +1,95 @@
-import io
-import asyncio
-from PIL import Image
+import openai
 import streamlit as st
-from openai import OpenAI
-from streamlit.runtime.scriptrunner import RerunException
+from PIL import Image
+import torchxrayvision as xrv
+from torchvision import transforms
+import torch
 
-# Initialize API key
-if "API_KEY" not in st.session_state:
-    st.session_state.API_KEY = None
+# Initialize session state for OpenAI API Key
+if "OPENAI_API_KEY" not in st.session_state:
+    st.session_state.OPENAI_API_KEY = None
 
-# Sidebar for Configuration
+# Sidebar for API Key Configuration
 with st.sidebar:
     st.title("🔧 Configuration")
-    if not st.session_state.API_KEY:
-        api_key = st.text_input("Enter API Key:", type="password")
-        if st.button("Save Key"):
-            st.session_state.API_KEY = api_key
+    if not st.session_state.OPENAI_API_KEY:
+        api_key = st.text_input("Enter your OpenAI API Key:", type="password")
+        if api_key:
+            st.session_state.OPENAI_API_KEY = api_key
             st.success("API Key saved!")
-            st.experimental_rerun()
+            st.rerun()
     else:
-        st.success("API Key configured!")
-        if st.button("Reset Key"):
-            st.session_state.API_KEY = None
-            st.experimental_rerun()
+        st.success("API Key is configured")
 
-# Image Upload Section
-st.title("🏥 Medical Imaging Diagnosis")
-st.write("Upload a medical image to receive AI-powered diagnostic insights.")
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png", "dicom"])
+# Main Application
+st.title("🏥 Medical Imaging Diagnosis Agent")
 
-# Process and Analyze Image
+# Image Upload
+uploaded_file = st.file_uploader("Upload Medical Image (Chest X-ray)", type=["jpg", "jpeg", "png"])
+
+# Load pre-trained medical imaging model (torchxrayvision)
+@st.cache_resource
+def load_medical_model():
+    model = xrv.models.get_model("resnet50-res512-all")  # Use the model name with weights
+    model.eval()
+    return model
+
+model = load_medical_model()
+
+# Preprocess function for X-ray images
+def preprocess_xray(image):
+    transform = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),  # Convert to single channel
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.5], std=[0.5])  # Normalize
+    ])
+    return transform(image)
+
 if uploaded_file:
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        # Open and display image
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+    # Display the image
+    image = Image.open(uploaded_file).convert("RGB")
+    st.image(image, caption="Uploaded Medical Image", use_container_width=True)
 
-        if st.button("Analyze Image"):
-            with st.spinner("Analyzing..."):
-                try:
-                    # Convert image to bytes
-                    image_bytes = io.BytesIO()
-                    image.save(image_bytes, format="PNG")
-                    image_bytes.seek(0)
+    # Analyze Image Button
+    analyze_button = st.button("🔍 Analyze Image")
 
-                    # Generate analysis
-                    query = "Analyze this medical image and provide diagnostic insights."
-                    response = OpenAI.ChatCompletion.create(
-                        model="gpt-4",
-                        messages=[{"role": "system", "content": query}],
-                    )
-                    st.markdown("### 📋 Results")
-                    st.write(response["choices"][0]["message"]["content"])
-                except Exception as e:
-                    st.error(f"Error during analysis: {e}")
-else:
-    st.info("Please upload an image to get started.")
+    if analyze_button:
+        with st.spinner("Analyzing image..."):
+            try:
+                # Step 1: Preprocess the image and run the X-ray model
+                processed_image = preprocess_xray(image)
+                processed_image = processed_image.unsqueeze(0)  # Add batch dimension
+                outputs = model(processed_image)
+
+                # Extract predictions
+                diseases = model.pathologies
+                predictions = torch.sigmoid(outputs[0]).detach().numpy()
+
+                # Select top predictions
+                top_diseases = sorted(
+                    zip(diseases, predictions),
+                    key=lambda x: x[1],
+                    reverse=True
+                )[:3]
+
+                extracted_text = "\n".join([f"{disease}: {confidence:.2f}" for disease, confidence in top_diseases])
+
+                # Step 2: Use OpenAI for further analysis
+                openai.api_key = st.session_state.OPENAI_API_KEY
+                response = openai.ChatCompletion.create(
+                    model="gpt-4",
+                    messages=[
+                        {"role": "system", "content": "You are a medical imaging expert."},
+                        {"role": "user", "content": f"Analyze the following findings from a chest X-ray:\n{extracted_text}"}
+                    ],
+                )
+
+                # Step 3: Display results
+                st.markdown("### 📋 Analysis Results")
+                st.markdown(response.choices[0]["message"]["content"])
+                st.caption(
+                    "Note: This analysis is generated by AI and should be reviewed by qualified healthcare professionals."
+                )
+            except Exception as e:
+                st.error(f"Error during analysis: {e}")

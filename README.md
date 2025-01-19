@@ -1,77 +1,148 @@
-# 🩻 Medical Imaging Diagnosis
 
-Welcome to the **Medical Imaging Diagnosis Sidekick**! This isn’t just another AI tool; it’s your charming assistant, designed to bring life (and wit) to the world of medical imaging. Built on **phidata** and powered by the super-experimental **Gemini 2.0 Flash**, this AI marvel dives deep into your medical images and serves up diagnostic insights with flair.
 
----
+# 🏥 Medical Imaging Diagnosis Agent
 
-## 🎉 Features That Shine Brighter Than Your X-ray:
-
-- **Image Type Genius:** Instantly figures out if it's an X-ray, MRI, CT scan, or ultrasound (no judgment if it’s a selfie).
-- **Anatomy Guru:** Pinpoints the exact body region because nobody likes a guesser.
-- **Detective Extraordinaire:** Spots abnormalities and delivers observations with the confidence of Sherlock Holmes.
-- **Quality Inspector:** Rates image quality to ensure it’s Instagram-worthy (or at least diagnosis-worthy).
-- **Friendly Explainer:** Breaks down findings into everyday language your grandma could understand.
+This project is a **Medical Imaging Diagnosis Agent** that combines advanced computer vision techniques and OpenAI's GPT-4 model to analyze chest X-rays and provide detailed insights. The application is built using **Streamlit** for an interactive web-based interface.
 
 ---
 
-## 🔧 How to Get Started:
+## Features
 
-1. **Clone the repo and move in:**
-   ```sh
-   git clone https://github.com/sachnaror/ai_medical_image_analysis.git
-   cd ai_medical_image_analysis
-   ```
+### 1. Computer Vision Analysis
+- Utilizes a pre-trained medical imaging model (**ResNet50**) from `torchxrayvision`.
+- Identifies common pathologies in chest X-rays (e.g., pneumonia, effusion, atelectasis).
 
-2. **Install the essentials:**
-   ```sh
-   pip install -r requirements.txt
-   ```
+### 2. OpenAI GPT-4 Integration
+- Processes findings extracted from the X-ray analysis.
+- Generates detailed diagnostic insights and explanations.
+- Provides patient-friendly descriptions of complex medical terms.
 
-3. **Secure your keys to the AI castle:**
-   - Grab your **Google API key** from Google AI Studio (don’t worry, it’s easier than it sounds).
-
-4. **Run the show:**
-   ```sh
-   streamlit run ai_medical_imaging.py
-   ```
+### 3. User-Friendly Interface
+- Built with **Streamlit** for a simple and intuitive user experience.
+- Allows users to upload medical images and receive real-time results.
 
 ---
 
-## 🧩 What Does It Actually Do?
+## How It Works
 
-**Image Type and Region:**
-- Determines the type of image (no, it doesn’t mix up MRIs with your vacation photos).
-- Identifies the anatomical area of interest with laser precision.
-
-**Key Findings:**
-- Lists observations in a systematic manner, like a neat freak with a medical degree.
-- Highlights abnormalities because that’s what it’s here for.
-
-**Diagnostic Assessment:**
-- Provides a ranked list of potential diagnoses (with all the confidence of a medical pro).
-- Suggests differential diagnoses just in case.
-- Assesses severity ("Is it bad? Or really bad?").
-
-**Patient-Friendly Explanations:**
-- Turns complex medical jargon into language you’ll actually understand.
-- Adds visual reference points to ensure you’re not lost.
+1. **Upload Image**: Users upload a chest X-ray image (supported formats: JPG, JPEG, PNG).
+2. **Image Preprocessing**: The image is converted to grayscale, resized, and normalized for analysis.
+3. **Disease Prediction**:
+   - A pre-trained `torchxrayvision` model (`resnet50-res512-all`) identifies possible abnormalities.
+   - Outputs confidence scores for detected conditions.
+4. **Textual Analysis**:
+   - The findings from the image analysis are sent to OpenAI's GPT-4 model.
+   - GPT-4 provides a comprehensive diagnostic report and suggestions.
+5. **Results Display**: The diagnostic report is presented in a user-friendly format.
 
 ---
 
-## ⚠️ A Few Notes to Remember:
+## Installation
 
-- Powered by the futuristic **Gemini 2.0 Flash** for blazing-fast analysis.
-- Requires a stable internet connection (or it might pout).
-- API calls cost money, so keep an eye on usage.
-- For educational and tinkering purposes only (it’s not a licensed doctor, but it’s pretty smart).
+### Prerequisites
+- Python 3.12
+
+### Clone the Repository
+```bash
+git clone https://github.com/sachnaror/ai_medical_image_analysis.git
+cd medical-imaging-diagnosis-agent
+```
+
+### Install Dependencies
+Create a virtual environment and install the required Python packages:
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Application
+Launch the Streamlit application:
+```bash
+streamlit run medical_image.py
+```
 
 ---
 
-### 🎥 [Watch the Explainer Video](https://www.youtube.com/replace_with_actual_link)
+## File Structure
 
-![Creative Image](https://raw.githubusercontent.com/sachnaror/ai_medical_image_analysis/main/assets/creative_image.png)
+```plaintext
+medical-imaging-diagnosis-agent/
+├── medical_image.py       # Main application file
+├── requirements.txt       # Required Python dependencies
+└── README.md              # Project documentation
+```
 
 ---
+
+## Dependencies
+
+- **openai**: For GPT-4 integration
+- **streamlit**: For building the web-based interface
+- **torchxrayvision**: For chest X-ray analysis
+- **torch**: Required by `torchxrayvision`
+- **torchvision**: Required for image transformations
+- **Pillow**: For image processing
+
+Install these dependencies using the `requirements.txt` file:
+```plaintext
+openai>=0.27.0
+streamlit>=1.21.0
+Pillow>=10.0.0
+torch>=1.9.0
+torchvision>=0.10.0
+torchxrayvision>=0.0.32
+```
+
+---
+
+## Usage
+
+1. Open the application in your browser after starting the Streamlit server.
+2. Enter your OpenAI API Key in the sidebar.
+3. Upload a chest X-ray image.
+4. Click the **Analyze Image** button to view predictions and a detailed diagnostic report.
+
+---
+
+## Example Output
+
+### Input:
+A chest X-ray image of a patient.
+
+### Output:
+**Predicted Pathologies:**
+```plaintext
+- Pneumonia: 0.85
+- Effusion: 0.78
+- Atelectasis: 0.65
+```
+
+**Diagnostic Report:**
+```markdown
+### Comprehensive Image Analysis
+1. Scan Type: Chest X-ray
+2. Abnormalities: Pneumonia and Effusion detected.
+
+### Diagnostic Insights
+- Pneumonia: High likelihood.
+- Effusion: Moderate likelihood.
+- No significant findings of masses or fractures.
+
+### Patient-Friendly Explanation
+Your chest X-ray indicates possible pneumonia and fluid buildup (effusion). Please consult your healthcare provider for further evaluation and treatment.
+```
+
+---
+
+## Disclaimer
+This tool is for **educational purposes only**. All analyses should be reviewed by qualified healthcare professionals. Do not make medical decisions based solely on this application.
+
+---
+
+## License
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
 
 ## 📩 Contact
 
@@ -83,5 +154,4 @@ Welcome to the **Medical Imaging Diagnosis Sidekick**! This isn’t just another
 | **📂 GitHub**      | [github.com/sachnaror](https://github.com/sachnaror) |
 | **🌐 Website**     | [https://about.me/sachin-arora](https://about.me/sachin-arora) |
 | **📱 Phone**       | [+91 9560330483](tel:+919560330483) |
-
 
