@@ -73,4 +73,15 @@ Welcome to the **Medical Imaging Diagnosis Sidekick**! This isn’t just another
 
 ---
 
-**Disclaimer:** This tool is for educational and informational purposes only. Always consult a qualified healthcare professional for medical decisions. Trust us, it’s better to leave life-altering calls to the humans in lab coats.
+## 📩 Contact
+
+| Name              | Details                             |
+|-------------------|-------------------------------------|
+| **👨‍💻 Developer**  | Sachin Arora                      |
+| **📧 Email**       | [sachnaror@gmail.com](mailto:sachnaror@gmail.com) |
+| **📍 Location**    | Noida, India                       |
+| **📂 GitHub**      | [github.com/sachnaror](https://github.com/sachnaror) |
+| **🌐 Website**     | [https://about.me/sachin-arora](https://about.me/sachin-arora) |
+| **📱 Phone**       | [+91 9560330483](tel:+919560330483) |
+
+
