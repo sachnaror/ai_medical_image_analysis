@@ -1,4 +1,4 @@
-# 🩻 Medical Imaging Diagnosis Sidekick
+# 🩻 Medical Imaging Diagnosis
 
 Welcome to the **Medical Imaging Diagnosis Sidekick**! This isn’t just another AI tool; it’s your charming assistant, designed to bring life (and wit) to the world of medical imaging. Built on **phidata** and powered by the super-experimental **Gemini 2.0 Flash**, this AI marvel dives deep into your medical images and serves up diagnostic insights with flair.
 
