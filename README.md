@@ -1,54 +1,76 @@
-🩻 Medical Imaging Diagnosis Agent
-A Medical Imaging Diagnosis Agent build on phidata powered by Gemini 2.0 Flash Experimental that provides AI-assisted analysis of medical images of various scans. The agent acts as a medical imaging diagnosis expert to analyze various types of medical images and videos, providing detailed diagnostic insights and explanations.
+# 🩻 Medical Imaging Diagnosis Sidekick
 
-Features
-Comprehensive Image Analysis
-Image Type Identification (X-ray, MRI, CT scan, ultrasound)
-Anatomical Region Detection
-Key Findings and Observations
-Potential Abnormalities Detection
-Image Quality Assessment
-Research and Reference
-How to Run
-Setup Environment
+Welcome to the **Medical Imaging Diagnosis Sidekick**! This isn’t just another AI tool; it’s your charming assistant, designed to bring life (and wit) to the world of medical imaging. Built on **phidata** and powered by the super-experimental **Gemini 2.0 Flash**, this AI marvel dives deep into your medical images and serves up diagnostic insights with flair.
 
-# Clone the repository
-git clone https://github.com/Shubhamsaboo/awesome-llm-apps.git
-cd ai_agent_tutorials/ai_medical_imaging_agent
+---
 
-# Install dependencies
-pip install -r requirements.txt
-Configure API Keys
+## 🎉 Features That Shine Brighter Than Your X-ray:
 
-Get Google API key from Google AI Studio
-Run the Application
+- **Image Type Genius:** Instantly figures out if it's an X-ray, MRI, CT scan, or ultrasound (no judgment if it’s a selfie).
+- **Anatomy Guru:** Pinpoints the exact body region because nobody likes a guesser.
+- **Detective Extraordinaire:** Spots abnormalities and delivers observations with the confidence of Sherlock Holmes.
+- **Quality Inspector:** Rates image quality to ensure it’s Instagram-worthy (or at least diagnosis-worthy).
+- **Friendly Explainer:** Breaks down findings into everyday language your grandma could understand.
 
-streamlit run ai_medical_imaging.py
-Analysis Components
-Image Type and Region
+---
 
-Identifies imaging modality
-Specifies anatomical region
-Key Findings
+## 🔧 How to Get Started:
 
-Systematic listing of observations
-Detailed appearance descriptions
-Abnormality highlighting
-Diagnostic Assessment
+1. **Clone the repo and move in:**
+   ```sh
+   git clone https://github.com/sachnaror/ai_medical_image_analysis.git
+   cd ai_medical_image_analysis
+   ```
 
-Potential diagnoses ranking
-Differential diagnoses
-Severity assessment
-Patient-Friendly Explanations
+2. **Install the essentials:**
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-Simplified terminology
-Detailed first-principles explanations
-Visual reference points
-Notes
-Uses Gemini 2.0 Flash for analysis
-Requires stable internet connection
-API usage costs apply
-For educational and development purposes only
-Not a replacement for professional medical diagnosis
-Disclaimer
-This tool is for educational and informational purposes only. All analyses should be reviewed by qualified healthcare professionals. Do not make medical decisions based solely on this analysis.
+3. **Secure your keys to the AI castle:**
+   - Grab your **Google API key** from Google AI Studio (don’t worry, it’s easier than it sounds).
+
+4. **Run the show:**
+   ```sh
+   streamlit run ai_medical_imaging.py
+   ```
+
+---
+
+## 🧩 What Does It Actually Do?
+
+**Image Type and Region:**
+- Determines the type of image (no, it doesn’t mix up MRIs with your vacation photos).
+- Identifies the anatomical area of interest with laser precision.
+
+**Key Findings:**
+- Lists observations in a systematic manner, like a neat freak with a medical degree.
+- Highlights abnormalities because that’s what it’s here for.
+
+**Diagnostic Assessment:**
+- Provides a ranked list of potential diagnoses (with all the confidence of a medical pro).
+- Suggests differential diagnoses just in case.
+- Assesses severity ("Is it bad? Or really bad?").
+
+**Patient-Friendly Explanations:**
+- Turns complex medical jargon into language you’ll actually understand.
+- Adds visual reference points to ensure you’re not lost.
+
+---
+
+## ⚠️ A Few Notes to Remember:
+
+- Powered by the futuristic **Gemini 2.0 Flash** for blazing-fast analysis.
+- Requires a stable internet connection (or it might pout).
+- API calls cost money, so keep an eye on usage.
+- For educational and tinkering purposes only (it’s not a licensed doctor, but it’s pretty smart).
+
+---
+
+### 🎥 [Watch the Explainer Video](https://www.youtube.com/replace_with_actual_link)
+
+![Creative Image](https://raw.githubusercontent.com/sachnaror/ai_medical_image_analysis/main/assets/creative_image.png)
+
+---
+
+**Disclaimer:** This tool is for educational and informational purposes only. Always consult a qualified healthcare professional for medical decisions. Trust us, it’s better to leave life-altering calls to the humans in lab coats.
